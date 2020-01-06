@@ -130,7 +130,7 @@ int main()
     {
         for (int j = i; j + (j - i) < n+1; j++)
         {
-            if (!strncmp(s, s2 + j, j - i))
+            if (strncmp(s, s2 + j, j - i)==0)
             {
                 chmax(max, 2*(j - i));
             }
