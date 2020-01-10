@@ -13,13 +13,14 @@
 using namespace std;
 typedef unsigned long long ull;
 typedef long long ll;
-#define MOD 10000000000　+　7    //10億　= 10^9になってる
+#define MOD 10000000007          //10億　= 10^9になってる
 #define juu 100000               //10万 10e5
 #define hyaku 1000000            //100万　10e6
 #define mINF -922337200085470000 //llのmax-1桁の小さい方
 #define pINF 922337203600070000  //llのmax-1桁のデカい方
 #define uINF 1844674407300000000 //ullのmax-1桁してる
 #define pi 3.1415926535897932384
+#define all(v) v.begin(), v.end()
 ll factor[300];
 ll memory[300];
 /*素朴法で計算
@@ -99,26 +100,48 @@ ll nPr(int n, int r)
     }
     return val;
 }
-
-void chmin(ll &a, ll b)
+template <typename T>
+bool chmin(T &a, const T b)
 {
     if (a > b)
+    {
         a = b;
+        return true;
+    }
+    return false;
 }
-void chmax(ll &a, ll b)
+template <typename T>
+bool chmax(T &a, const T b)
 {
     if (a < b)
+    {
         a = b;
+        return true;
+    }
+    return false;
 }
 
+/*aとbで大きい方を後ろにする。変更なしならtrue、ありならfalse */
+template<typename T>
+bool swapmax(T &a,T&b){
+    T temp;
+    temp = a;
+    if(a > b){
+        a = b;
+        b = temp;
+        return false;
+    }
+    return true;
+}
+ll gcd(ll x, ll y) { return (x % y) ? gcd(y, x % y) : y; }
+ll lcm(ll x, ll y) { return x / gcd(x, y) * y; }
 /*
 qsort(array,length,sizeof(int),(int(*)(const int*, const int*))compare);
 使う時これをコピペ
 */
 
-
 int main()
 {
-    
+
     return 0;
 }
