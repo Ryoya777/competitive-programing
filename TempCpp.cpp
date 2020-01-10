@@ -65,15 +65,7 @@ int elast(ll number)
     }
     return tmp + 2;
 }
-/*整数をqsortする為だけのもの*/
-long long compare(const long long *a, const long long *b)
-{
-    if (*a < *b)
-        return -1;
-    else if (*a > *b)
-        return 1;
-    return 0;
-}
+
 /*intで収まる範囲であってくれ*/
 ll nCr(int n, int r)
 {
@@ -100,6 +92,17 @@ ll nPr(int n, int r)
     return val;
 }
 
+/*第一引数と第二引数で大きい方を後ろにする*/
+template<typename T>
+void swapmax(T& a,T&b){
+    T temp;
+    if(a > b){
+        temp = a;
+        a = b;
+        b = temp;
+    }
+}
+
 void chmin(ll &a, ll b)
 {
     if (a > b)
@@ -110,7 +113,15 @@ void chmax(ll &a, ll b)
     if (a < b)
         a = b;
 }
-
+/*整数をqsortする為だけのもの*/
+long long compare(const long long *a, const long long *b)
+{
+    if (*a < *b)
+        return -1;
+    else if (*a > *b)
+        return 1;
+    return 0;
+}
 /*
 qsort(array,length,sizeof(int),(int(*)(const int*, const int*))compare);
 使う時これをコピペ
