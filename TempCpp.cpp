@@ -13,7 +13,7 @@
 using namespace std;
 typedef unsigned long long ull;
 typedef long long ll;
-#define MOD 10000000007          //10億　= 10^9になってる
+#define MOD 1000000007           //10億　= 10^9になってる
 #define juu 100000               //10万 10e5
 #define hyaku 1000000            //100万　10e6
 #define mINF -922337200085470000 //llのmax-1桁の小さい方
@@ -113,12 +113,22 @@ bool chmax(T &a, const T b)
     return false;
 }
 
+/*ソートして被りを無くす*/
+template <typename T>
+void eraseSame(T &a)
+{
+    sort(all(a));
+    a.erase(unique(all(a)), a.end());
+}
+
 /*aとbで大きい方を後ろにする。変更なしならtrue、ありならfalse */
-template<typename T>
-bool swapmax(T &a,T&b){
+template <typename T>
+bool swapmax(T &a, T &b)
+{
     T temp;
     temp = a;
-    if(a > b){
+    if (a > b)
+    {
         a = b;
         b = temp;
         return false;
