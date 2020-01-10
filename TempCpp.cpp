@@ -92,24 +92,8 @@ ll nPr(int n, int r)
     }
     return val;
 }
-<<<<<<< HEAD
 template <typename T>
 bool chmin(T &a, const T b)
-=======
-
-/*第一引数と第二引数で大きい方を後ろにする*/
-template<typename T>
-void swapmax(T& a,T&b){
-    T temp;
-    if(a > b){
-        temp = a;
-        a = b;
-        b = temp;
-    }
-}
-
-void chmin(ll &a, ll b)
->>>>>>> 16d474dc281ec83f6f34e3daa35e0f09ab0624ec
 {
     if (a > b)
     {
@@ -128,7 +112,6 @@ bool chmax(T &a, const T b)
     }
     return false;
 }
-<<<<<<< HEAD
 
 /*aとbで大きい方を後ろにする。変更なしならtrue、ありならfalse */
 template<typename T>
@@ -144,17 +127,6 @@ bool swapmax(T &a,T&b){
 }
 ll gcd(ll x, ll y) { return (x % y) ? gcd(y, x % y) : y; }
 ll lcm(ll x, ll y) { return x / gcd(x, y) * y; }
-=======
-/*整数をqsortする為だけのもの*/
-long long compare(const long long *a, const long long *b)
-{
-    if (*a < *b)
-        return -1;
-    else if (*a > *b)
-        return 1;
-    return 0;
-}
->>>>>>> 16d474dc281ec83f6f34e3daa35e0f09ab0624ec
 /*
 qsort(array,length,sizeof(int),(int(*)(const int*, const int*))compare);
 使う時これをコピペ
