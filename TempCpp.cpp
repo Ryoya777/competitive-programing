@@ -68,10 +68,10 @@ int elast(ll number)
 }
 
 /*intで収まる範囲であってくれ*/
-ll nCr(int n, int r)
+ll nCr(ll n, ll r)
 {
     ll val = 1;
-    int i;
+    ll i;
     if (r == 0)
         return 1;
     for (i = 0; i < n - r; i++)
@@ -82,10 +82,10 @@ ll nCr(int n, int r)
     return val;
 }
 /*intで収まる範囲であってくれ*/
-ll nPr(int n, int r)
+ll nPr(ll n, ll r)
 {
     ll val = 1;
-    int i;
+    ll i;
     for (i = 0; i < r; i++)
     {
         val *= (n - i);
@@ -137,13 +137,27 @@ bool swapmax(T &a, T &b)
 }
 ll gcd(ll x, ll y) { return (x % y) ? gcd(y, x % y) : y; }
 ll lcm(ll x, ll y) { return x / gcd(x, y) * y; }
-/*
-qsort(array,length,sizeof(int),(int(*)(const int*, const int*))compare);
-使う時これをコピペ
-*/
 
+/*一行に入力が何個あるかを1,ぶち込むvectorを2*/
+template <typename T>
+void splitIn(ll N, vector<T> &array)
+{
+    T temp;
+    int i = 0;
+    array.resize(N);
+    while (cin >> temp)
+    {
+        array[i] = temp;
+        i++;
+        if (i >= N)
+        {
+            break;
+        }
+    }
+    return;
+}
 int main()
 {
-
+    
     return 0;
 }
