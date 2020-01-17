@@ -146,6 +146,9 @@ void splitIn(ll N, vector<T> &array)
 {
     T temp;
     int i = 0;
+    if(N == 0){
+        return ;
+    }
     array.resize(N);
     while (cin >> temp)
     {
