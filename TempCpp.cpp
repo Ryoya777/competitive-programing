@@ -165,6 +165,14 @@ void splitIn(ll N, vector<T> &array)
 }
 int main()
 {
-    
+    ll n,k,m;
+    ll ans = 0;
+    string s;
+    vector<vector<ll>> v;
+    cin >> n >> k >> m;
+
+
+
+    cout << ans << endl;
     return 0;
 }
