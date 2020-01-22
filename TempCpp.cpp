@@ -17,6 +17,7 @@
 using namespace std;
 typedef unsigned long long ull;
 typedef long long ll;
+typedef pair<ll,ll> prll;
 #define MOD 1000000007           //10億　= 10^9になってる
 #define juu 100000               //10万 10e5
 #define hyaku 1000000            //100万　10e6
