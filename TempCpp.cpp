@@ -169,7 +169,7 @@ int main()
     ll n,k,m;
     ll ans = 0;
     string s;
-    vector<vector<ll>> v;
+    vector<ll> v;
     cin >> n >> k >> m;
 
 
