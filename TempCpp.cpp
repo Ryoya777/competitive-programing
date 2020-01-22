@@ -25,7 +25,7 @@ typedef long long ll;
 #define uINF 1844674407300000000 //ullのmax-1桁してる
 #define pi 3.1415926535897932384
 #define all(v) v.begin(), v.end()
-#define Rep(i,n) for{ll (i)= 0;(i)<(n);++(i)}
+#define rep(i, n) for (ll i = 0; i < (int)(n); i++)
 ll factor[300];
 ll memory[300];
 /*素朴法で計算
