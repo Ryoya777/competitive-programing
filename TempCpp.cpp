@@ -12,6 +12,7 @@
 #include <map>
 #include <utility>
 #include<functional>
+#include <iomanip>
 #include <unordered_map>
 #include <set>
 using namespace std;
@@ -172,8 +173,6 @@ int main()
     string s;
     vector<ll> v;
     cin >> n >> k >> m;
-
-
 
     cout << ans << endl;
     return 0;
