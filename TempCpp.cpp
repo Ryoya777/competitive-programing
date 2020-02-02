@@ -23,7 +23,9 @@ typedef pair<ll,ll> prll;
 #define juu 100000               //10万 10e5
 #define hyaku 1000000            //100万　10e6
 #define mINF -922337200085470000 //llのmax-1桁の小さい方
-#define pINF 922337203600070000  //llのmax-1桁のデカい方
+const ll pINF =   1 << 60;
+
+
 #define uINF 1844674407399900000 //ullのmax-1桁してる
 #define pi 3.1415926535897932384
 #define all(v) v.begin(), v.end()
