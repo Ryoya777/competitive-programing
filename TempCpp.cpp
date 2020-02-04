@@ -16,16 +16,16 @@
 #include <unordered_map>
 #include <set>
 using namespace std;
-typedef unsigned long long ull;
-typedef long long ll;
-typedef pair<ll, ll> prll;
+using ull = unsigned long long;
+using  ll =long long ;
+using  prll =pair<ll, ll>;
 static const ll MOD = 1000000007;           //10億　= 10^9になってる
 static const ll mINF = -922337200085470000; //llのmax-1桁の小さい方
 static const ll pINF = 1LL << 60;
 static const ull uINF=  1844674407399900000; //ullのmax-1桁してる
 static const double  pi = 3.1415926535897932384;
-#define juu 100000                          //10万 10e5
-#define hyaku 1000000                    //100万　10e6
+static const ll juu = 100000;             //10万 10e5
+static const ll hyaku = 1000000;         //100万　10e6
 #define all(v) v.begin(), v.end()
 #define rep(i, n) for (ll i = 0; i < (ll)(n); i++)
 ll factor[300];
