@@ -173,8 +173,9 @@ int main()
 {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    ll n, k, m;
+    ll n, k, m,l;
     ll ans = 0;
+    ll sum = 0;
     string s;
     vector<ll> v;
     cin >> n >> k >> m;
