@@ -26,8 +26,8 @@ static const ull uINF=  1844674407399900000; //ullのmax-1桁してる
 static const double  pi = 3.1415926535897932384;
 static const ll juu = 100000;             //10万 10e5
 static const ll hyaku = 1000000;         //100万　10e6
-static const ll dx[4] = {0,0,1,-1};
-static const ll dy[4] = {1,-1,0,0};
+static const ll dx[4] = {0,0,1,-1}; //上下左右のベクトル
+static const ll dy[4] = {1,-1,0,0}; //上下左右のベクトル
 #define all(v) v.begin(), v.end()
 #define rep(i, n) for (ll i = 0; i < (ll)(n); i++)
 ll factor[300];

@@ -18,6 +18,8 @@ typedef long long ll;
 #define pINF 922337203600070000  //llのmax-1桁のデカい方
 #define uINF 1844674407300000000 //ullのmax-1桁してる
 #define pi 3.1415926535897932384
+const ll dx[4] = {0,0,1,-1};
+const ll dy[4] = {1,-1,0,0};
 ll factor[300];
 ll memory[300];
 /*素朴法で計算
