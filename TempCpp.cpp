@@ -83,7 +83,7 @@ ll nCr(ll n, ll r)
     ll i;
     if (r == 0)
         return 1;
-    for (i = 0; i < n - r; i++)
+    for (i = 0; i < n - r; ++i)
     {
         val *= (n - i);
         val /= (i + 1);
@@ -95,7 +95,7 @@ ll nPr(ll n, ll r)
 {
     ll val = 1;
     ll i;
-    for (i = 0; i < r; i++)
+    for (i = 0; i < r; ++i)
     {
         val *= (n - i);
     }
