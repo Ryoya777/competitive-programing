@@ -1,3 +1,5 @@
+/*重さの制限が高々１０万程度までのナップザック*/
+
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
@@ -193,19 +195,14 @@ int main()
         {
             if (w + weight[i] < m + 1)
             {
-                v[i + 1][w + weight[i]] = max(v[i][w + weight[i]] + value[i], v[i][w]);
+                v[i + 1][w + weight[i]] = max(v[i][w] + value[i], v[i][w]);
             }
             else
             {
-                v[i + 1][w] = v[i][w];
+                chmax(v[i + 1][w] , v[i][w]);
             }
         }
     }
     cout << v[n][m] << endl;
-    rep(i, 4)
-    {
-        rep(j, 11) cout << v[i][j] << " ";
-        cout << endl;
-    }
     return 0;
 }
