@@ -76,21 +76,19 @@ int elast(ll number)
     return tmp + 2;
 }
 
-/*intで収まる範囲であってくれ*/
 ll nCr(ll n, ll r)
 {
     ll val = 1;
     ll i;
     if (r == 0)
         return 1;
-    for (i = 0; i < n - r; ++i)
+    for (i = 0; i < r; ++i)
     {
         val *= (n - i);
-        val /= (i + 1);
+        val /= (r - i);
     }
     return val;
 }
-/*intで収まる範囲であってくれ*/
 ll nPr(ll n, ll r)
 {
     ll val = 1;
