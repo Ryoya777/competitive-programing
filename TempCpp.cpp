@@ -8,6 +8,7 @@
 #include <iostream>
 #include <vector>
 #include <bitset>
+#include <deque>
 #include <queue>
 #include <map>
 #include <utility>
