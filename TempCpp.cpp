@@ -206,6 +206,6 @@ int main()
     vector<ll> v;
     cin >> n >> k >> m;
 
-    cout << ans << endl;
+    cout << ans << "\n";
     return 0;
 }
