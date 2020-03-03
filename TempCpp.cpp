@@ -8,6 +8,7 @@
 #include <iostream>
 #include <vector>
 #include <bitset>
+#include <deque>
 #include <queue>
 #include <map>
 #include <utility>
@@ -75,27 +76,51 @@ int elast(ll number)
     }
     return tmp + 2;
 }
-
-/*intで収まる範囲であってくれ*/
+//繰り返し二乗。掛けられる数、回数、mod
+ll powpow(ll n, ll p)
+{
+    if (p == 1)
+        return n % MOD;
+    if (p % 2 == 1)
+    {
+        return (n * powpow(n, p - 1)) % MOD;
+    }
+    ll dob = powpow(n, p / 2);
+    return (dob * dob) % MOD;
+}
+//MODとn、rが互いに素である事が確定していないとこれは出来ない。小定理、またchild,parentでおかしくなる。 mod取った後にそれら同士で割り算するとおかしくなるから逆元使う。（合同式の性質考えろ）
+ll nCrMod(ll n, ll r)
+{
+    ll child = 1;
+    ll parent = 1;
+    if (r == 0)
+        return 1;
+    for (ll i = 0; i < r; ++i)
+    {
+        child = child * (n - i) % MOD;
+        parent = parent * (r - i) % MOD;
+    }
+    ll ans = child * powpow(parent, MOD - 2);
+    return ans % MOD;
+}
 ll nCr(ll n, ll r)
 {
     ll val = 1;
     ll i;
     if (r == 0)
         return 1;
-    for (i = 0; i < n - r; i++)
+    for (i = 0; i < r; ++i)
     {
         val *= (n - i);
-        val /= (i + 1);
+        val /= (r - i);
     }
     return val;
 }
-/*intで収まる範囲であってくれ*/
 ll nPr(ll n, ll r)
 {
     ll val = 1;
     ll i;
-    for (i = 0; i < r; i++)
+    for (i = 0; i < r; ++i)
     {
         val *= (n - i);
     }
@@ -173,8 +198,10 @@ int main()
 {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    //setprecision(15);
     ll n, k, m,l;
-    ll ans = 0,sum = 0;
+    ll ans = 0;
+    ll sum = 0;
     string s;
     vector<ll> v;
     cin >> n >> k >> m;
