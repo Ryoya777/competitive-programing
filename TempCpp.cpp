@@ -20,15 +20,15 @@ using namespace std;
 using ull = unsigned long long;
 using  ll =long long ;
 using  prll =pair<ll, ll>;
-static const ll MOD = 1000000007;           //10億　= 10^9になってる
-static const ll mINF = -922337200085470000; //llのmax-1桁の小さい方
-static const ll pINF = 1LL << 60;
-static const ull uINF=  1844674407399900000; //ullのmax-1桁してる
-static const double  pi = 3.1415926535897932384;
-static const ll juu = 100000;             //10万 10e5
-static const ll hyaku = 1000000;         //100万　10e6
-static const ll dx[4] = {0,0,1,-1}; //上下左右のベクトル
-static const ll dy[4] = {1,-1,0,0}; //上下左右のベクトル
+constexpr ll MOD = 1000000007;           //10億　= 10^9になってる
+constexpr ll mINF = -922337200085470000; //llのmax-1桁の小さい方
+constexpr ll pINF = 1LL << 60;
+constexpr ull uINF=  1844674407399900000; //ullのmax-1桁してる
+constexpr double  pi = 3.1415926535897932384;
+constexpr ll juu = 100000;             //10万 10e5
+constexpr ll hyaku = 1000000;         //100万　10e6
+constexpr ll dx[4] = {0,0,1,-1}; //上下左右のベクトル
+constexpr ll dy[4] = {1,-1,0,0}; //上下左右のベクトル
 #define all(v) v.begin(), v.end()
 #define rep(i, n) for (ll i = 0; i < (ll)(n); i++)
 ll factor[300];
@@ -205,7 +205,6 @@ int main()
     string s;
     vector<ll> v;
     cin >> n >> k >> m;
-    
+
     cout << ans << "\n";
-    return 0;
 }
