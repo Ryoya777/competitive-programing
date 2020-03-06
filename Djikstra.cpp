@@ -194,18 +194,45 @@ void splitIn(ll N, vector<T> &array)
     }
     return;
 }
+
+//ダイクストラ用ノード
+typedef struct NODE{
+    vector<ll> to;
+    vector<ll> cost;
+
+    bool fin;
+    ll mncost;
+
+    operator<
+}node;
+
+
+ll Djikstra(){
+    ll n, k, m,l;
+    cin >> n >> k >> m;
+    vector<node> v(n);
+    for(auto &o:v){
+        o.fin = false;
+        for(auto &b:o.cost )
+        {b = pINF;}
+    }
+    rep(i,n){
+        rep(j,m)cin >> v[i].to[m];
+    }
+    priority_queue<node> p;
+    p.push(v[0]);
+}
+
 int main()
 {
     ios::sync_with_stdio(false);
     cin.tie(0);
     //setprecision(15);
-    ll n, k, m,l;
     ll ans = 0;
     ll sum = 0;
     string s;
     vector<ll> v;
-    cin >> n >> k >> m;
-
+    ans = Djikstra();
     cout << ans << "\n";
     return 0;
 }
