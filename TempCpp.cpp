@@ -208,4 +208,5 @@ int main()
     cin >> n >> k >> m;
 
     cout << ans << "\n";
+    return 0;
 }
