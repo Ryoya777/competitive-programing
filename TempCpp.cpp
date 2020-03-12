@@ -104,6 +104,9 @@ ll nCrMod(ll n, ll r)
     ll ans = child * powpow(parent, MOD - 2);
     return ans % MOD;
 }
+ll to_digit(ll num){
+    return (ll)(to_string(num).size());
+}
 ll nCr(ll n, ll r)
 {
     ll val = 1;
@@ -207,7 +210,7 @@ int main()
     string s;
     vector<ll> v;
     cin >> n >> k >> m;
-
+    
     cout << ans << "\n";
     return 0;
 }
