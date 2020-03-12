@@ -200,6 +200,7 @@ int main()
     ios::sync_with_stdio(false);
     cin.tie(0);
     //setprecision(15);
+    //cout.fixed;
     ll n, k, m,l;
     ll ans = 0;
     ll sum = 0;
