@@ -31,6 +31,7 @@ static const ll dx[4] = {0,0,1,-1}; //上下左右のベクトル
 static const ll dy[4] = {1,-1,0,0}; //上下左右のベクトル
 #define all(v) v.begin(), v.end()
 #define rep(i, n) for (ll i = 0; i < (ll)(n); i++)
+#define Debug(xx) cerr << " DEBUG:"<< xx << endl
 ll factor[300];
 ll memory[300];
 /*素朴法で計算
