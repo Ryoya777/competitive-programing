@@ -111,16 +111,18 @@ ll to_digit(ll num){
 }
 ll nCr(ll n, ll r)
 {
-    ll val = 1;
+    ll val = 1,val2 = 1;
     ll i;
     if (r == 0)
         return 1;
+    if(n < r)
+        return 0;
     for (i = 0; i < r; ++i)
     {
         val *= (n - i);
-        val /= (r - i);
+        val2 *= (r - i);
     }
-    return val;
+    return val/val2;
 }
 ll nPr(ll n, ll r)
 {
