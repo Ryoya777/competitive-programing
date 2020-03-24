@@ -30,8 +30,8 @@ constexpr ll juu = 100000;             //10万 10e5
 constexpr ll hyaku = 1000000;         //100万　10e6
 constexpr int dx[4] = {0,0,1,-1}; //上下左右のベクトル
 constexpr int dy[4] = {1,-1,0,0}; //上下左右のベクトル
-constexpr int ddx[8] = {0,0,1,-1,1,1,-1,-1}
-constexpr int ddy[8] = {1,-1,0,0,-1,1,1,-1}
+constexpr int ddx[8] = {0,0,1,-1,1,1,-1,-1};
+constexpr int ddy[8] = {1,-1,0,0,-1,1,1,-1};
 #define all(v) v.begin(), v.end()
 #define rep(i, n) for (ll i = 0; i < (ll)(n); i++)
 #define Debug(xx) cerr << " DEBUG:"<< xx << endl ;
