@@ -28,8 +28,10 @@ constexpr ull uINF=  1844674407399900000; //ullのmax-1桁してる
 constexpr double  pi = 3.1415926535897932384;
 constexpr ll juu = 100000;             //10万 10e5
 constexpr ll hyaku = 1000000;         //100万　10e6
-constexpr ll dx[4] = {0,0,1,-1}; //上下左右のベクトル
-constexpr ll dy[4] = {1,-1,0,0}; //上下左右のベクトル
+constexpr int dx[4] = {0,0,1,-1}; //上下左右のベクトル
+constexpr int dy[4] = {1,-1,0,0}; //上下左右のベクトル
+constexpr int ddx[8] = {0,0,1,-1,1,1,-1,-1}
+constexpr int ddy[8] = {1,-1,0,0,-1,1,1,-1}
 #define all(v) v.begin(), v.end()
 #define rep(i, n) for (ll i = 0; i < (ll)(n); i++)
 #define Debug(xx) cerr << " DEBUG:"<< xx << endl ;
@@ -200,12 +202,11 @@ void splitIn(ll N, vector<T> &array)
     }
     return;
 }
-int main()
+signed main()
 {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    //cout.precision(20);
-    //cout << fixed;
+    //cout << fixed << setprecision(20);
     ll n, k, m,l;
     ll ans = 0;
     ll sum = 0;

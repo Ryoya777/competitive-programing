@@ -4,10 +4,12 @@
 #include <cstring>
 #include <numeric>
 #include <string>
+#include <complex>
 #include <algorithm>
 #include <iostream>
 #include <vector>
 #include <bitset>
+#include <deque>
 #include <queue>
 #include <map>
 #include <utility>
@@ -19,15 +21,20 @@ using namespace std;
 using ull = unsigned long long;
 using ll = long long;
 using prll = pair<ll, ll>;
-static const ll MOD = 1000000007;           //10億　= 10^9になってる
-static const ll mINF = -922337200085470000; //llのmax-1桁の小さい方
-static const ll pINF = 1LL << 60;
-static const ull uINF = 1844674407399900000; //ullのmax-1桁してる
-static const double pi = 3.1415926535897932384;
-static const ll juu = 100000;    //10万 10e5
-static const ll hyaku = 1000000; //100万　10e6
+constexpr ll MOD = 1000000007;           //10億　= 10^9になってる
+constexpr ll mINF = -922337200085470000; //llのmax-1桁の小さい方
+constexpr ll pINF = 1LL << 60;
+constexpr ull uINF = 1844674407399900000; //ullのmax-1桁してる
+constexpr double pi = 3.1415926535897932384;
+constexpr ll juu = 100000;           //10万 10e5
+constexpr ll hyaku = 1000000;        //100万　10e6
+constexpr int dx[4] = {0, 0, 1, -1}; //上下左右のベクトル
+constexpr int dy[4] = {1, -1, 0, 0}; //上下左右のベクトル
+constexpr int ddx[8] = {0, 0, 1, -1, 1, 1, -1, -1} constexpr int ddy[8] = {1, -1, 0, 0, -1, 1, 1, -1}
 #define all(v) v.begin(), v.end()
 #define rep(i, n) for (ll i = 0; i < (ll)(n); i++)
+#define Debug(xx) cerr << " DEBUG:" << xx << endl;
+#define Debug2(xx, yy) cerr << " DEBUG:" << xx << ":" << yy << endl;
 ll factor[300];
 ll memory[300];
 /*素朴法で計算
@@ -73,27 +80,55 @@ int elast(ll number)
     }
     return tmp + 2;
 }
-
-/*intで収まる範囲であってくれ*/
-ll nCr(ll n, ll r)
+//繰り返し二乗。掛けられる数、回数、mod
+ll powpow(ll n, ll p)
 {
-    ll val = 1;
-    ll i;
+    if (p == 1)
+        return n % MOD;
+    if (p % 2 == 1)
+    {
+        return (n * powpow(n, p - 1)) % MOD;
+    }
+    ll dob = powpow(n, p / 2);
+    return (dob * dob) % MOD;
+}
+//MODとn、rが互いに素である事が確定していないとこれは出来ない。小定理、またchild,parentでおかしくなる。 mod取った後にそれら同士で割り算するとおかしくなるから逆元使う。（合同式の性質考えろ）
+ll nCrMod(ll n, ll r)
+{
+    ll child = 1;
+    ll parent = 1;
     if (r == 0)
         return 1;
-    for (i = 0; i < n - r; i++)
+    for (ll i = 0; i < r; ++i)
+    {
+        child = child * (n - i) % MOD;
+        parent = parent * (r - i) % MOD;
+    }
+    ll ans = child * powpow(parent, MOD - 2);
+    return ans % MOD;
+}
+ll to_digit(ll num)
+{
+    return (ll)(to_string(num).size());
+}
+ll nCr(ll n, ll r)
+{
+    ll val = 1, val2 = 1;
+    if (r == 0)
+        return 1;
+    if (n < r)
+        return 0;
+    for (ll i = 0; i < r; ++i)
     {
         val *= (n - i);
-        val /= (i + 1);
+        val2 *= (r - i);
     }
-    return val;
+    return val / val2;
 }
-/*intで収まる範囲であってくれ*/
 ll nPr(ll n, ll r)
 {
     ll val = 1;
-    ll i;
-    for (i = 0; i < r; i++)
+    for (ll i = 0; i < r; ++i)
     {
         val *= (n - i);
     }
@@ -168,42 +203,67 @@ void splitIn(ll N, vector<T> &array)
     return;
 }
 
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+//グラフ関連のクラスは基本intを使う
+struct info
+{
+    int cost;
+    int to;
+};
+struct node
+{
+    bool seen;             //参照済みか
+    vector<info> nodeinfo; //ノードに関する情報
+    //[]でノードの情報を返す
+    const info &operator[](int index)
+    {
+        return const & nodeinfo[index];
+    }
+};
+
 class Graph
 {
-private:
-    vector<vector<ll>> graph;
-    vector<vector<bool>> seen;
+public:
+    vector<node> graph;
     int cnt;
-Graph(){
-    cnt = 0;
-}
-Graph(ll x, ll y){
-    cnt = 0;
-    graph.resize(x);
-    for (int i = 0; i < y; ++i)
+    Graph()
     {
-        graph[i].resize(y);
+        cnt = 0;
     }
-}
-void Resize(ll x, ll y)
-{
-    graph.resize(x);
-    for (int i = 0; i < x; ++i)
+    Graph(ll x, ll y)
     {
-        graph[i].resize(y);
-    }
-    return;
-}
-/*x*yの入力を受ける*/
-void input(ll x, ll y)
-{
-    for(int i = 0;i < x;++i){
-        for(int j = 0;j < y;++j){
-            cin >> graph[x][y];
+        cnt = 0;
+        graph.resize(x + 2); //入力で与えられるのが1スタートでも0でも良いように
+        for (int i = 0; i < y; ++i)
+        {
+            graph[i].nodeinfo.reserve(y + 2);
         }
     }
-}
+    void addEdgeInfo(int from, int to, int cost)
+    {
+        graph[from].nodeinfo.push_back({to, cost});
+    }
+    void addEdge(int from, int to, int cost)
+    {
+        graph[from].seen = false;
+        graph[to].seen = false;
+        addEdgeInfo(from, to, cost);
+        addEdgeInfo(to, from, cost);
+    }
+    //あとでグリッド表示のグラフを隣接行列に変換するのを作る
     ~Graph();
+};
+
+struct warshall_floyd :public Graph
+{
+    Graph gra;
+    warshall_floyd(int number_of_node):Graph(number_of_node){};
+    ll solve(Graph gra)
+    {
+        ll ans = 0;
+        
+        return ans;
+    }
 };
 
 
