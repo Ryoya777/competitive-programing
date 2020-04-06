@@ -25,7 +25,7 @@ constexpr ll MOD = 1000000007;           //10億　= 10^9になってる
 constexpr ll mINF = -922337200085470000; //llのmax-1桁の小さい方
 constexpr ll pINF = 1LL << 60;
 constexpr ull uINF=  1844674407399900000; //ullのmax-1桁してる
-constexpr double  pi = 3.1415926535897932384;
+constexpr long double  pi = 3.1415926535897932384;
 constexpr ll juu = 100000;             //10万 10e5
 constexpr ll hyaku = 1000000;         //100万　10e6
 constexpr int dx[4] = {0,0,1,-1}; //上下左右のベクトル
@@ -171,8 +171,7 @@ bool swapmax(T &a, T &b)
     temp = a;
     if (a > b)
     {
-        a = b;
-        b = temp;
+        swap(a,b);
         return false;
     }
     return true;
