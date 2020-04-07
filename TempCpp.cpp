@@ -15,6 +15,7 @@
 #include <utility>
 #include <functional>
 #include <iomanip>
+#include <chrono>
 #include <unordered_map>
 #include <set>
 using namespace std;
@@ -201,6 +202,13 @@ void splitIn(ll N, vector<T> &array)
     }
     return;
 }
+/*時間計測
+chrono::system_clock::time_point  start, end;
+start = chrono::system_clock::now();
+
+end = std::chrono::system_clock::now();
+double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count();
+*/
 signed main()
 {
     ios::sync_with_stdio(false);
