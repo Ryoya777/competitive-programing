@@ -194,7 +194,7 @@ void splitIn(ll N, vector<T> &array)
     while (cin >> temp)
     {
         array[i] = temp;
-        i++;
+        ++i;
         if (i >= N)
         {
             break;
