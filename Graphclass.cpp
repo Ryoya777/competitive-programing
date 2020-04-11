@@ -30,7 +30,8 @@ constexpr ll juu = 100000;           //10万 10e5
 constexpr ll hyaku = 1000000;        //100万　10e6
 constexpr int dx[4] = {0, 0, 1, -1}; //上下左右のベクトル
 constexpr int dy[4] = {1, -1, 0, 0}; //上下左右のベクトル
-constexpr int ddx[8] = {0, 0, 1, -1, 1, 1, -1, -1} constexpr int ddy[8] = {1, -1, 0, 0, -1, 1, 1, -1}
+constexpr int ddx[8] = {0, 0, 1, -1, 1, 1, -1, -1};
+constexpr int ddy[8] = {1, -1, 0, 0, -1, 1, 1, -1};
 #define all(v) v.begin(), v.end()
 #define rep(i, n) for (ll i = 0; i < (ll)(n); i++)
 #define Debug(xx) cerr << " DEBUG:" << xx << endl;
@@ -207,17 +208,17 @@ void splitIn(ll N, vector<T> &array)
 //グラフ関連のクラスは基本intを使う
 struct info
 {
-    int cost;
     int to;
+    int cost;
 };
 struct node
 {
     bool seen;             //参照済みか
     vector<info> nodeinfo; //ノードに関する情報
     //[]でノードの情報を返す
-    const info &operator[](int index)
+    info& operator[](int index)
     {
-        return const & nodeinfo[index];
+        return nodeinfo[index];
     }
 };
 
@@ -230,19 +231,34 @@ public:
     {
         cnt = 0;
     }
-    Graph(ll x, ll y)
+    Graph(ll x)
     {
         cnt = 0;
-        graph.resize(x + 2); //入力で与えられるのが1スタートでも0でも良いように
-        for (int i = 0; i < y; ++i)
+        graph.resize(x); 
+        for (int i = 0; i < x; ++i)
         {
-            graph[i].nodeinfo.reserve(y + 2);
+            graph[i].nodeinfo.reserve(x);
         }
     }
+
+    void init(ll x)
+    {
+        graph.resize(x);
+        rep(i, x)
+        {
+            graph[i].seen = false;
+        }
+        for (int i = 0; i < x; ++i)
+        {
+            graph[i].nodeinfo.reserve(x);
+        }
+    }
+
     void addEdgeInfo(int from, int to, int cost)
     {
         graph[from].nodeinfo.push_back({to, cost});
     }
+    ~Graph(){}
     void addEdge(int from, int to, int cost)
     {
         graph[from].seen = false;
@@ -250,8 +266,12 @@ public:
         addEdgeInfo(from, to, cost);
         addEdgeInfo(to, from, cost);
     }
+    void addEdgeWithDirection(int from,int to,int cost){
+        graph[from].seen = false;
+        graph[to].seen = false;
+        addEdgeInfo(from, to, cost);
+    }
     //あとでグリッド表示のグラフを隣接行列に変換するのを作る
-    ~Graph();
 };
 
 struct warshall_floyd :public Graph
