@@ -85,6 +85,9 @@ int elast(ll number)
 //繰り返し二乗。掛けられる数、回数、mod
 ll powpow(ll n, ll p)
 {
+    if(p == 0){
+        return 1;
+    }
     if (p == 1)
         return n % MOD;
     if (p % 2 == 1)
