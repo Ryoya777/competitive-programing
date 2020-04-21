@@ -271,6 +271,10 @@ public:
         graph[to].seen = false;
         addEdgeInfo(from, to, cost);
     }
+    ll Djikstra(ll start,ll goal){
+        priority_queue<>
+
+    }
     //あとでグリッド表示のグラフを隣接行列に変換するのを作る
 };
 
@@ -286,7 +290,33 @@ struct warshall_floyd :public Graph
     }
 };
 
-
+struct unionF{
+    vector<int> parent;
+    //0を親として全て初期化する。
+    unionF(ll N):parent(N,-1){ }
+    int root(int x){
+        if(parent[x] < 0)return x;
+        return parent[x] = root(parent[x]);
+    }
+    bool issame(int x,int y){
+        return root(x) == root(y);
+    }
+    //二つの集合を併合する。併合した時true。
+    bool merge(int x,int y){
+        x = root(x);
+        y = root(y);
+        if(x == y) return false;
+        else{
+            //マイナスなので大きい方がランクが低い。ランクはその集合に属する要素の個数。
+            if(parent[x] > parent[y])swap(x,y);
+            //ランクの足し算.
+            parent[x] += parent[y];
+            //ランクが大きい方に小さいのを併合する.
+            parent[x] = y;
+            return true;
+        }
+    }
+}
 
 int main()
 {
