@@ -216,7 +216,7 @@ struct node
     bool seen;             //参照済みか
     vector<info> nodeinfo; //ノードに関する情報
     //[]でノードの情報を返す
-    info& operator[](int index)
+    info &operator[](int index)
     {
         return nodeinfo[index];
     }
@@ -234,7 +234,7 @@ public:
     Graph(ll x)
     {
         cnt = 0;
-        graph.resize(x); 
+        graph.resize(x);
         for (int i = 0; i < x; ++i)
         {
             graph[i].nodeinfo.reserve(x);
@@ -258,7 +258,7 @@ public:
     {
         graph[from].nodeinfo.push_back({to, cost});
     }
-    ~Graph(){}
+    ~Graph() {}
     void addEdge(int from, int to, int cost)
     {
         graph[from].seen = false;
@@ -266,57 +266,128 @@ public:
         addEdgeInfo(from, to, cost);
         addEdgeInfo(to, from, cost);
     }
-    void addEdgeWithDirection(int from,int to,int cost){
+    void addEdgeWithDirection(int from, int to, int cost)
+    {
         graph[from].seen = false;
         graph[to].seen = false;
         addEdgeInfo(from, to, cost);
     }
-    ll Djikstra(ll start,ll goal){
+    ll Djikstra(ll start, ll goal)
+    {
         priority_queue<>
-
     }
     //あとでグリッド表示のグラフを隣接行列に変換するのを作る
 };
 
-struct warshall_floyd :public Graph
+//ワ―シャルフロイドは面倒だから隣接行列でやるべきかもしれない
+struct warshall_floyd
 {
-    Graph gra;
-    warshall_floyd(int number_of_node):Graph(number_of_node){};
-    ll solve(Graph gra)
+    const int INF = 1e8;
+    vector<vector<int>> graph;
+    int number_of_node;
+
+    warshall_floyd(int N) : graph(N, vector<int>(N, INF)), number_of_node(N)
+    {
+        for (int i = 0; i < number_of_node; ++i)
+        {
+            graph[i][i] = 0;
+        }
+    };
+
+    //warshall_floyd::
+    vector<int>& operator[](const int index)
+    {
+        return graph[index];
+    }
+
+    void input(int input_times)
+    {
+        int u, v, cost;
+        for (int i = 0; i < input_times; ++i)
+        {
+            cin >> u >> v >> cost;
+            --u;
+            --v;
+            //多重に辺が掛かってる可能性があるので
+            graph[u][v] = min(cost, graph[u][v]);
+            graph[v][u] = min(cost, graph[v][u]);
+        }
+        return;
+    }
+    //戻り値のインデックス-1してます
+    ll solve(int ans_i, int ans_j)
     {
         ll ans = 0;
-        
-        return ans;
+        for (int k = 0; k < number_of_node; k++)
+        {
+            for (int i = 0; i < number_of_node; i++)
+            {
+                for (int j = 0; j < number_of_node; j++)
+                {
+                    graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j]);
+                }
+            }
+        }
+        return graph[ans_i - 1][ans_j - 1];
+    }
+    void solve()
+    {
+        ll ans = 0;
+        for (int k = 0; k < number_of_node; k++)
+        {
+            for (int i = 0; i < number_of_node; i++)
+            {
+                for (int j = 0; j < number_of_node; j++)
+                {
+                    graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j]);
+                }
+            }
+        }
+        return ;
     }
 };
 
-struct unionF{
+struct unionfind
+{
     vector<int> parent;
-    //0を親として全て初期化する。
-    unionF(ll N):parent(N,-1){ }
-    int root(int x){
-        if(parent[x] < 0)return x;
-        return parent[x] = root(parent[x]);
+    //0未満を親として全て初期化する。
+    unionfind(ll N) : parent(N, -1) {}
+    int root(int x)
+    {
+        if (parent[x] < 0)
+            return x;
+        //経路圧縮
+        else
+            return parent[x] = root(parent[x]);
     }
-    bool issame(int x,int y){
+    bool issame(int x, int y)
+    {
         return root(x) == root(y);
     }
     //二つの集合を併合する。併合した時true。
-    bool merge(int x,int y){
+    bool merge(int x, int y)
+    {
         x = root(x);
         y = root(y);
-        if(x == y) return false;
-        else{
+        if (x == y)
+            return false;
+        else
+        {
             //マイナスなので大きい方がランクが低い。ランクはその集合に属する要素の個数。
-            if(parent[x] > parent[y])swap(x,y);
+            if (parent[x] > parent[y])
+                swap(x, y);
             //ランクの足し算.
             parent[x] += parent[y];
             //ランクが大きい方に小さいのを併合する.
-            parent[x] = y;
+            parent[y] = x;
             return true;
         }
     }
-}
+    int size(int x)
+    {
+        return -parent[root(x)];
+    }
+};
 
 int main()
 {
@@ -326,7 +397,7 @@ int main()
     ll ans = 0;
     string s;
     vector<ll> v;
-    cin >> n >> k >> m;
+    cin >> n >> m >> k;
 
     cout << ans << endl;
     return 0;
