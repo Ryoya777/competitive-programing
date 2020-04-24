@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <cstring>
+#include <cassert>
 #include <numeric>
 #include <string>
 #include <complex>
@@ -20,29 +21,31 @@
 #include <set>
 using namespace std;
 using ull = unsigned long long;
-using  ll =long long ;
-using  prll =pair<ll, ll>;
-constexpr ll MOD = 1000000007;           //10億　= 10^9になってる
-constexpr ll mINF = -922337200085470000; //llのmax-1桁の小さい方
+using ll = long long;
+using prll = pair<ll, ll>;
+constexpr ll MOD = 1000000007; //10億　= 10^9になってる
+constexpr ll mINF = -(1LL << 60);
 constexpr ll pINF = 1LL << 60;
-constexpr ull uINF=  1844674407399900000; //ullのmax-1桁してる
-constexpr long double  pi = 3.1415926535897932384;
-constexpr ll juu = 100000;             //10万 10e5
-constexpr ll hyaku = 1000000;         //100万　10e6
-constexpr int dx[4] = {0,0,1,-1}; //上下左右のベクトル
-constexpr int dy[4] = {1,-1,0,0}; //上下左右のベクトル
-constexpr int ddx[8] = {0,0,1,-1,1,1,-1,-1};
-constexpr int ddy[8] = {1,-1,0,0,-1,1,1,-1};
+constexpr ull uINF = 1844674407399900000; //ullのmax-1桁してる
+constexpr long double pi = 3.1415926535897932384;
+constexpr ll juu = 100000;    //10万 10e5
+constexpr ll hyaku = 1000000; //100万　10e6
+constexpr int dx[4] = {0, 0, 1, -1};
+constexpr int dy[4] = {1, -1, 0, 0};
+constexpr int ddx[8] = {0, 0, 1, -1, 1, 1, -1, -1};
+constexpr int ddy[8] = {1, -1, 0, 0, -1, 1, 1, -1};
 #define all(v) v.begin(), v.end()
 #define rep(i, n) for (ll i = 0; i < (ll)(n); i++)
-#define Debug(xx) cerr << " DEBUG:"<< xx << endl ;
-#define Debug2(xx,yy) cerr << " DEBUG:"<< xx << ":" << yy<< endl ;
+#define Debug(xx) cerr << " DEBUG:" << xx << endl;
+#define Debug2(xx, yy) cerr << " DEBUG:" << xx << ":" << yy << endl;
+vector<int> factor;
+/*
 ll factor[300];
 ll memory[300];
-/*素朴法で計算
+素朴法で計算
 factorは必ずmemset(factor,0,sizeof(factor));
 グローバルであるmemoryに個数を書き込む
-memory配列の走査にはfactorの要素を使う*/
+memory配列の走査にはfactorの要素を使う
 void primefac(ll num)
 {
     int i = 0, kosuu = 0;
@@ -57,35 +60,42 @@ void primefac(ll num)
             break;
         i++;
     }
-}
-/*グローバルにあるfactorに素数書き込む.個数を返すので配列は-1しろforは<*/
-int elast(ll number)
+}*/
+
+/*どこまで篩を使いたいか、と初期化のみしたvectorを与える,個数が帰ってくる*/
+int elast(int maximum)
 {
-    ll tmp = 0;
-    int flag = 0;
-    *factor = 2;
-    for (int i = 3; i <= number; i++)
+    ll cnt = 1;
+    int size_of_vector = maximum/3 + 100;
+    factor.reserve(size_of_vector);
+    bool flag = false;
+    factor.emplace_back(2);
+    for (ll i = 3; i <= maximum; i += 2)
     {
-        flag = 0;
-        for (int j = 0; j <= tmp; j++)
+        flag = false;
+        for(auto &fac:factor)
         {
-            if (i % (*(factor + j)) == 0)
+            //if (i % (*factor_itr) == 0)
+            if(i % fac == 0)
             {
-                flag = 1;
+                flag = true;
                 break;
             }
         }
         if (flag)
             continue;
-        tmp += 1;
-        *(factor + tmp) = i;
+        ++cnt;
+        factor.emplace_back(i);
+        
     }
-    return tmp + 2;
+    return cnt;
 }
+
 //繰り返し二乗。掛けられる数、回数、mod
 ll powpow(ll n, ll p)
 {
-    if(p == 0){
+    if (p == 0)
+    {
         return 1;
     }
     if (p == 1)
@@ -97,6 +107,7 @@ ll powpow(ll n, ll p)
     ll dob = powpow(n, p / 2);
     return (dob * dob) % MOD;
 }
+
 //MODとn、rが互いに素である事が確定していないとこれは出来ない。小定理、またchild,parentでおかしくなる。 mod取った後にそれら同士で割り算するとおかしくなるから逆元使う。（合同式の性質考えろ）
 ll nCrMod(ll n, ll r)
 {
@@ -112,22 +123,23 @@ ll nCrMod(ll n, ll r)
     ll ans = child * powpow(parent, MOD - 2);
     return ans % MOD;
 }
-ll to_digit(ll num){
+ll to_digit(ll num)
+{
     return (ll)(to_string(num).size());
 }
 ll nCr(ll n, ll r)
 {
-    ll val = 1,val2 = 1;
+    ll val = 1, val2 = 1;
     if (r == 0)
         return 1;
-    if(n < r)
+    if (n < r)
         return 0;
     for (ll i = 0; i < r; ++i)
     {
         val *= (n - i);
         val2 *= (r - i);
     }
-    return val/val2;
+    return val / val2;
 }
 ll nPr(ll n, ll r)
 {
@@ -175,13 +187,13 @@ bool swapmax(T &a, T &b)
     temp = a;
     if (a > b)
     {
-        swap(a,b);
+        swap(a, b);
         return false;
     }
     return true;
 }
-ll gcd(ll x, ll y) { return (x % y) ? gcd(y, x % y) : y; }
-ll lcm(ll x, ll y) { return x / gcd(x, y) * y; }
+ll GCD(ll x, ll y) { return (x % y) ? GCD(y, x % y) : y; }
+ll LCD(ll x, ll y) { return x / GCD(x, y) * y; }
 
 /*一行に入力が何個あるかを1,ぶち込むvectorを2*/
 template <typename T>
@@ -217,13 +229,13 @@ signed main()
     ios::sync_with_stdio(false);
     cin.tie(0);
     //cout << fixed << setprecision(20);
-    ll n, k, m,l;
+    ll n, k, m, l;
     ll ans = 0;
     ll sum = 0;
     string s;
     vector<ll> v;
     cin >> n >> k >> m;
-    
+
     cout << ans << "\n";
     return 0;
 }
