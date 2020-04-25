@@ -218,6 +218,20 @@ void splitIn(ll N, vector<T> &array)
     }
     return;
 }
+ll facmod(ll num)
+{
+    ll ans = 1;
+    if (num == 0)
+        return 1;
+    for (ll i = num; i >= 1;--i){
+        ans = (ans * i) % MOD;
+    }
+    return ans;
+}
+
+ll inv_num(ll num){
+    return powpow(num,MOD-2);
+}
 /*時間計測
 chrono::system_clock::time_point  start, end;
 start = chrono::system_clock::now();
