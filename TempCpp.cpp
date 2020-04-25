@@ -20,8 +20,8 @@
 #include <unordered_map>
 #include <set>
 using namespace std;
-using ull = unsigned long long;
-using ll = long long;
+using ull = uint64_t;
+using ll = int_fast64_t;
 using prll = pair<ll, ll>;
 constexpr ll MOD = 1000000007; //10億　= 10^9になってる
 constexpr ll mINF = -(1LL << 60);
@@ -35,7 +35,8 @@ constexpr int dy[4] = {1, -1, 0, 0};
 constexpr int ddx[8] = {0, 0, 1, -1, 1, 1, -1, -1};
 constexpr int ddy[8] = {1, -1, 0, 0, -1, 1, 1, -1};
 #define all(v) v.begin(), v.end()
-#define rep(i, n) for (ll i = 0; i < (ll)(n); i++)
+#define rep(i, n) for (ll i = 0; i < (ll)(n); ++i)
+#define repN(i,first,end) for(ll i = first;i < (ll)(end);++i)
 #define Debug(xx) cerr << " DEBUG:" << xx << endl;
 #define Debug2(xx, yy) cerr << " DEBUG:" << xx << ":" << yy << endl;
 vector<int> factor;
