@@ -3,6 +3,7 @@
 #include <cmath>
 #include <cstring>
 #include <numeric>
+#include <cstdint>
 #include <string>
 #include <complex>
 #include <algorithm>
@@ -18,8 +19,8 @@
 #include <unordered_map>
 #include <set>
 using namespace std;
-using ull = unsigned long long;
-using ll = long long;
+using ull = uint64_t;
+using ll = int_fast64_t;
 using prll = pair<ll, ll>;
 constexpr ll MOD = 1000000007;           //10億　= 10^9になってる
 constexpr ll mINF = -922337200085470000; //llのmax-1桁の小さい方
@@ -213,7 +214,8 @@ struct info
 };
 struct node
 {
-    bool seen;             //参照済みか
+    bool seen = false; //参照済みか
+    ll value = 0;
     vector<info> nodeinfo; //ノードに関する情報
     //[]でノードの情報を返す
     info &operator[](int index)
@@ -223,10 +225,10 @@ struct node
 };
 
 class Graph
-{
+{ //ノードの番号全て0から
 public:
-    vector<node> graph;
-    int cnt;
+    vector<node> NodeList;
+    int cnt = 0;
     Graph()
     {
         cnt = 0;
@@ -234,70 +236,137 @@ public:
     Graph(ll x)
     {
         cnt = 0;
-        graph.resize(x);
-        for (int i = 0; i < x; ++i)
-        {
-            graph[i].nodeinfo.reserve(x);
-        }
-    }
-
-    void init(ll x)
-    {
-        graph.resize(x);
+        NodeList.resize(x);
         rep(i, x)
         {
-            graph[i].seen = false;
+            NodeList[i].value = 0;
+            NodeList[i].seen = false;
         }
         for (int i = 0; i < x; ++i)
         {
-            graph[i].nodeinfo.reserve(x);
+            NodeList[i].nodeinfo.reserve(x);
+        }
+    }
+    void Debug_graph()
+    {
+        int i = 0;
+        cerr << "---------graph----------\n";
+        for (auto &o : NodeList)
+        {
+            cerr << "---node:" << i << "---\n";
+            cerr << "seen:" << boolalpha << o.seen << "\n";
+            cerr << "value:" << o.value << "\n";
+            cerr << "size of nodeinfo:" << o.nodeinfo.size() << "\n";
+            for (auto &nd : o.nodeinfo)
+            {
+                cerr << "to::" << nd.to << " "
+                     << "cost::" << nd.cost << "\n";
+            }
+            i++;
+        }
+    }
+    void init(ll x)
+    {
+        NodeList.resize(x);
+        rep(i, x)
+        {
+            NodeList[i].value = 0;
+            NodeList[i].seen = false;
+        }
+        for (int i = 0; i < x; ++i)
+        {
+            NodeList[i].nodeinfo.reserve(x);
         }
     }
 
     void addEdgeInfo(int from, int to, int cost)
     {
-        graph[from].nodeinfo.push_back({to, cost});
+        NodeList[from].nodeinfo.push_back({to, cost});
     }
     ~Graph() {}
     void addEdge(int from, int to, int cost)
     {
-        graph[from].seen = false;
-        graph[to].seen = false;
+        NodeList[from].seen = false;
+        NodeList[to].seen = false;
         addEdgeInfo(from, to, cost);
         addEdgeInfo(to, from, cost);
     }
     void addEdgeWithDirection(int from, int to, int cost)
     {
-        graph[from].seen = false;
-        graph[to].seen = false;
+        NodeList[from].seen = false;
+        NodeList[to].seen = false;
         addEdgeInfo(from, to, cost);
     }
-    ll Djikstra(ll start, ll goal)
-    {
-        priority_queue<>
-    }
     //あとでグリッド表示のグラフを隣接行列に変換するのを作る
+};
+
+struct Djikstra : public Graph
+{
+    priority_queue<node> PQ;
+    bool solved = false;
+    using Graph::Graph;
+    //引数は0スタートで入力しろ
+    ll solve(ll start, ll goal)
+    {
+        for (int32_t i = 0; i < NodeList.size(); ++i)
+        {
+            if (i == start)
+            {
+                NodeList[i].value = 0;
+            }
+            else
+            {
+                NodeList[i].value = pINF;
+            }
+        }
+        PQ.push(NodeList[start]);
+        while (!PQ.empty())
+        {
+            auto doneNode = PQ.top();
+            PQ.pop();
+            doneNode.seen = true;
+            for (auto &o : doneNode.nodeinfo)
+            {
+                auto to = o.to;
+                int_fast64_t next_cost = o.cost + doneNode.value;
+                if (NodeList[o.to].seen)
+                {
+                    if (chmin(NodeList[o.to].value, next_cost))
+                    {
+                        PQ.push(NodeList[o.to]);
+                    }
+                    else{
+                        NodeList[o.to].seen = true;
+                    }
+                }
+                else{
+                    continue;
+                }
+            }
+        }
+        return NodeList[goal].value;
+    }
 };
 
 //ワ―シャルフロイドは面倒だから隣接行列でやるべきかもしれない
 struct warshall_floyd
 {
     const int INF = 1e8;
-    vector<vector<int>> graph;
+    vector<vector<int>> NodeList;
     int number_of_node;
 
-    warshall_floyd(int N) : graph(N, vector<int>(N, INF)), number_of_node(N)
+    warshall_floyd(int N) : NodeList(N, vector<int>(N, INF)), number_of_node(N)
     {
         for (int i = 0; i < number_of_node; ++i)
         {
-            graph[i][i] = 0;
+            NodeList[i][i] = 0;
         }
     };
 
     //warshall_floyd::
-    vector<int>& operator[](const int index)
+    vector<int> &operator[](const int index)
     {
-        return graph[index];
+        return NodeList[index];
     }
 
     void input(int input_times)
@@ -309,8 +378,8 @@ struct warshall_floyd
             --u;
             --v;
             //多重に辺が掛かってる可能性があるので
-            graph[u][v] = min(cost, graph[u][v]);
-            graph[v][u] = min(cost, graph[v][u]);
+            NodeList[u][v] = min(cost, NodeList[u][v]);
+            NodeList[v][u] = min(cost, NodeList[v][u]);
         }
         return;
     }
@@ -324,11 +393,11 @@ struct warshall_floyd
             {
                 for (int j = 0; j < number_of_node; j++)
                 {
-                    graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j]);
+                    NodeList[i][j] = min(NodeList[i][j], NodeList[i][k] + NodeList[k][j]);
                 }
             }
         }
-        return graph[ans_i - 1][ans_j - 1];
+        return NodeList[ans_i - 1][ans_j - 1];
     }
     void solve()
     {
@@ -339,11 +408,11 @@ struct warshall_floyd
             {
                 for (int j = 0; j < number_of_node; j++)
                 {
-                    graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j]);
+                    NodeList[i][j] = min(NodeList[i][j], NodeList[i][k] + NodeList[k][j]);
                 }
             }
         }
-        return ;
+        return;
     }
 };
 
