@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <cstring>
+#include <cstdint>
 #include <cassert>
 #include <numeric>
 #include <string>
@@ -36,7 +37,7 @@ constexpr int ddx[8] = {0, 0, 1, -1, 1, 1, -1, -1};
 constexpr int ddy[8] = {1, -1, 0, 0, -1, 1, 1, -1};
 #define all(v) v.begin(), v.end()
 #define rep(i, n) for (ll i = 0; i < (ll)(n); ++i)
-#define repN(i,first,end) for(ll i = first;i < (ll)(end);++i)
+#define repN(i, first, end) for (ll i = first; i < (ll)(end); ++i)
 #define Debug(xx) cerr << " DEBUG:" << xx << endl;
 #define Debug2(xx, yy) cerr << " DEBUG:" << xx << ":" << yy << endl;
 vector<int> factor;
@@ -67,17 +68,17 @@ void primefac(ll num)
 int elast(int maximum)
 {
     ll cnt = 1;
-    int size_of_vector = maximum/3 + 100;
+    int size_of_vector = maximum / 3 + 100;
     factor.reserve(size_of_vector);
     bool flag = false;
     factor.emplace_back(2);
     for (ll i = 3; i <= maximum; i += 2)
     {
         flag = false;
-        for(auto &fac:factor)
+        for (auto &fac : factor)
         {
             //if (i % (*factor_itr) == 0)
-            if(i % fac == 0)
+            if (i % fac == 0)
             {
                 flag = true;
                 break;
@@ -87,7 +88,6 @@ int elast(int maximum)
             continue;
         ++cnt;
         factor.emplace_back(i);
-        
     }
     return cnt;
 }
@@ -223,14 +223,16 @@ ll facmod(ll num)
     ll ans = 1;
     if (num == 0)
         return 1;
-    for (ll i = num; i >= 1;--i){
+    for (ll i = num; i >= 1; --i)
+    {
         ans = (ans * i) % MOD;
     }
     return ans;
 }
 
-ll inv_num(ll num){
-    return powpow(num,MOD-2);
+ll inv_num(ll num)
+{
+    return powpow(num, MOD - 2);
 }
 /*時間計測
 chrono::system_clock::time_point  start, end;
@@ -241,8 +243,10 @@ double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end-start
 */
 signed main()
 {
+    // int32_t max = 2,147,483,648 (10桁)
+    // int64_t max = 9,223,372,036,854,775,808 (19桁)
     ios::sync_with_stdio(false);
-    cin.tie(0);
+    cin.tie(nullptr);
     //cout << fixed << setprecision(20);
     ll n, k, m, l;
     ll ans = 0;
