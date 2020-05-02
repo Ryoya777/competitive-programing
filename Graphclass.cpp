@@ -212,8 +212,9 @@ struct info
     int to;
     int cost;
 };
-struct node
+class node
 {
+public:
     bool seen = false; //参照済みか
     ll value = 0;
     vector<info> nodeinfo; //ノードに関する情報
@@ -222,13 +223,25 @@ struct node
     {
         return nodeinfo[index];
     }
+    inline bool operator<(const node &rhs) const
+    {
+        return (*this).value < rhs.value;
+    }
+    inline bool operator>(const node &rhs) const
+    {
+        return (*this).value > rhs.value;
+    }
+    //inline bool operator>(const node & x,const node & y){
+    //  return x.value > y.value;
+    //}
 };
 
 class Graph
 { //ノードの番号全て0から
 public:
     vector<node> NodeList;
-    int cnt = 0;
+    ll calculation_order = 0;
+    int32_t cnt = 0;
     Graph()
     {
         cnt = 0;
@@ -251,6 +264,7 @@ public:
     {
         int i = 0;
         cerr << "---------graph----------\n";
+        cerr << "calculation_order = " << calculation_order << endl;
         for (auto &o : NodeList)
         {
             cerr << "---node:" << i << "---\n";
@@ -300,9 +314,12 @@ public:
     //あとでグリッド表示のグラフを隣接行列に変換するのを作る
 };
 
-struct Djikstra : public Graph
+class Dijkstra : public Graph
 {
-    priority_queue<node> PQ;
+public:
+    priority_queue< node,
+                    vector<node>,
+                    greater<node> > PQ;
     bool solved = false;
     using Graph::Graph;
     //引数は0スタートで入力しろ
@@ -327,19 +344,22 @@ struct Djikstra : public Graph
             doneNode.seen = true;
             for (auto &o : doneNode.nodeinfo)
             {
-                auto to = o.to;
+                //calculation_order+=2;
+                int32_t to = o.to;
                 int_fast64_t next_cost = o.cost + doneNode.value;
-                if (NodeList[o.to].seen)
+                if (! NodeList[o.to].seen)
                 {
                     if (chmin(NodeList[o.to].value, next_cost))
                     {
                         PQ.push(NodeList[o.to]);
                     }
-                    else{
+                    else
+                    {
                         NodeList[o.to].seen = true;
                     }
                 }
-                else{
+                else
+                {
                     continue;
                 }
             }
@@ -464,10 +484,8 @@ int main()
     cin.tie(0);
     ll n, k, m;
     ll ans = 0;
-    string s;
-    vector<ll> v;
-    cin >> n >> m >> k;
-
+    
+    
     cout << ans << endl;
     return 0;
 }
