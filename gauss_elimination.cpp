@@ -9,7 +9,7 @@
 class gauss
 {
 public:
-    gauss(std::int32_t Row, std::int32_t Col);
+    gauss(std::int32_t Number_of_Rows, std::int32_t Number_of_Cols);
 
     void solve();
 
@@ -19,12 +19,12 @@ private:
     using col_vec = std::vector<double>; 
     col_vec ans;
 
-    std::vector<std::vector<double>> matrix;
+    std::vector<col_vec> matrix;
 
-    int32_t row, col;
+    int32_t number_of_rows, number_of_cols;
 };
 
-gauss::gauss(int32_t Row, int32_t Col) : row(Row), col(Col), ans(Row, 0), matrix(Col, std::vector<double>(Row, 0.0))
+gauss::gauss(int32_t Number_of_Rows, int32_t Number_of_Cols) : number_of_rows(Number_of_Rows), number_of_cols(Number_of_Cols), ans(Number_of_Rows, 0), matrix(Number_of_Cols, std::vector<double>(Number_of_Rows, 0.0))
 {
     std::mt19937 engine((int32_t)time(NULL));
     for (auto &column : matrix)
@@ -38,13 +38,13 @@ gauss::gauss(int32_t Row, int32_t Col) : row(Row), col(Col), ans(Row, 0), matrix
 }
 void gauss::see_elements()
 {
-    std::cout << "row:" << row << "col:" << col << "\n";
-    for (int32_t i = 0; i < row; ++i)
+    std::cout << "row:" << number_of_rows << "number_of_cols:" << number_of_cols << "\n";
+    for (int32_t i = 0; i < number_of_rows; ++i)
     {
         std::cout << "| ";
-        for (int32_t j = 0; j < col; ++j)
+        for (int32_t j = 0; j < number_of_cols; ++j)
         {
-            std::cout << matrix[i][j];
+            std::cout << matrix[j][i];
             std::cout << " ";
         }
         std::cout << "|\n";
@@ -55,9 +55,9 @@ void gauss::solve()
 {
     int32_t num_of_row = 0;
     int32_t num_of_col = 0;
-    for (int32_t now_col = 0; now_col < col; now_col++)
+    for (int32_t now_col = 0; now_col < number_of_cols; now_col++)
     {
-        for (int32_t del_row = 0; del_row < row; del_row++)
+        for (int32_t del_row = 0; del_row < number_of_rows; del_row++)
         {
             //0除算回避
             if(std::fabs(matrix[now_col][del_row]) < DBL_MIN){
@@ -65,8 +65,8 @@ void gauss::solve()
             }
             else{
                 double div = matrix[now_col][del_row];
-                for(int32_t div_col = now_col;div_col < col;div_col++){
-                    for(int32_t div_row = del_row; div_row < row;div_row++){
+                for(int32_t div_col = now_col;div_col < number_of_cols;div_col++){
+                    for(int32_t div_row = del_row; div_row < number_of_rows;div_row++){
                         
                     }
                 }
