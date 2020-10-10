@@ -16,7 +16,7 @@ public:
     void see_elements();
 
 private:
-    using col_vec = std::vector<double>; 
+    using col_vec = std::vector<double>;
     col_vec ans;
 
     std::vector<col_vec> matrix;
@@ -36,6 +36,7 @@ gauss::gauss(int32_t Number_of_Rows, int32_t Number_of_Cols) : number_of_rows(Nu
         }
     }
 }
+
 void gauss::see_elements()
 {
     std::cout << "row:" << number_of_rows << "number_of_cols:" << number_of_cols << "\n";
@@ -60,13 +61,17 @@ void gauss::solve()
         for (int32_t del_row = 0; del_row < number_of_rows; del_row++)
         {
             //0除算回避
-            if(std::fabs(matrix[now_col][del_row]) < DBL_MIN){
+            if (std::fabs(matrix[now_col][del_row]) < DBL_MIN)
+            {
                 continue;
             }
-            else{
+            else
+            {
                 double div = matrix[now_col][del_row];
-                for(int32_t div_col = now_col;div_col < number_of_cols;div_col++){
-                    for(int32_t div_row = del_row; div_row < number_of_rows;div_row++){
+                for (int32_t div_col = now_col; div_col < number_of_cols; div_col++)
+                {
+                    for (int32_t div_row = del_row; div_row < number_of_rows; div_row++)
+                    {
                         
                     }
                 }
