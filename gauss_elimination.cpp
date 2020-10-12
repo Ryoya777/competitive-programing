@@ -122,6 +122,8 @@ void gauss::solve()
         ans[now_col] = total_of_left / matrix[now_col][now_col];
         times++;
     }
+    this->see_elements();
+    std::cout << std::endl;
     int32_t cnt = 1;
     for (auto &x : ans)
     {
@@ -138,6 +140,5 @@ int32_t main()
     new_mat.see_elements();
     std::cout << "\n";
     new_mat.solve();
-    new_mat.see_elements();
     return 0;
 }
