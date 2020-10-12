@@ -23,7 +23,7 @@ private:
     std::vector<row_vec> matrix;
 
     int32_t number_of_rows, number_of_cols;
-    void pivot_select(int start);
+    void pivot_select(int32_t start);
 };
 
 gauss::gauss(int32_t Number_of_Rows, int32_t Number_of_Cols) : number_of_rows(Number_of_Rows), number_of_cols(Number_of_Cols), ans(Number_of_Cols - 1, 1), matrix(Number_of_Rows, row_vec(Number_of_Cols, 0.0))
@@ -39,7 +39,7 @@ gauss::gauss(int32_t Number_of_Rows, int32_t Number_of_Cols) : number_of_rows(Nu
     }
 }
 
-void gauss::pivot_select(int start)
+void gauss::pivot_select(int32_t start)
 {
     //ゼロ含む時に枢軸にしないだけ
     for (int32_t i = start; i < number_of_rows; ++i)
