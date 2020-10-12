@@ -101,7 +101,7 @@ void gauss::solve()
             for (int32_t now_row = shallow_roop; now_row < number_of_cols; now_row++)
             {
                 matrix[now_col][now_row] -= coefficient * matrix[shallow_roop][now_row];
-                this->see_elements();
+                //this->see_elements();
                 //std::cout << "now_col " << now_col << " now_row" << now_row << "\n\n";
             }
             //std::cout << "out!!\n";
@@ -134,10 +134,10 @@ void gauss::solve()
 int32_t main()
 {
     int32_t num_of_variable = 5;
-    gauss mamama(num_of_variable, num_of_variable + 1);
-    mamama.see_elements();
+    gauss new_mat(num_of_variable, num_of_variable + 1);
+    new_mat.see_elements();
     std::cout << "\n";
-    mamama.solve();
-    mamama.see_elements();
+    new_mat.solve();
+    new_mat.see_elements();
     return 0;
 }
