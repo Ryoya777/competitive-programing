@@ -33,7 +33,7 @@ gauss::gauss(int32_t Number_of_Rows, int32_t Number_of_Cols) : number_of_rows(Nu
     {
         for (auto &ele : column)
         {
-            double res = engine() % 100;
+            double res = engine() % 1000;
             ele = res;
         }
     }
@@ -74,7 +74,14 @@ void gauss::see_elements()
         for (int32_t j = 0; j < number_of_cols; ++j)
         {
             std::cout << matrix[i][j];
-            std::cout << " ";
+            std::string s = std::to_string(matrix[i][j]);
+            int32_t degit = std::stoi(s);
+            if(degit > 0){
+                for(int32_t n = 0;n < 5 - degit;n++){
+                    std::cout << " ";
+                }
+            }
+            std::cout << "  ";
         }
         std::cout << "|\n";
     }
@@ -95,12 +102,11 @@ void gauss::solve()
             {
                 matrix[now_col][now_row] -= coefficient * matrix[shallow_roop][now_row];
                 this->see_elements();
-                std::cout << "now_col " << now_col << " now_row" << now_row << "\n\n";
+                //std::cout << "now_col " << now_col << " now_row" << now_row << "\n\n";
             }
             //std::cout << "out!!\n";
         }
     }
-    this->see_elements();
     //後退代入
     //ここはnow_colとnow_rowの使い方が変数の意味と完全に逆になっている。
     int32_t times = 1;
@@ -116,18 +122,19 @@ void gauss::solve()
         ans[now_col] = total_of_left / matrix[now_col][now_col];
         times++;
     }
-    std::cout << "\n";
     int32_t cnt = 1;
     for (auto &x : ans)
     {
-        std::cout << "X" << cnt << "=" << x << std::endl;
+        std::cout << "X" << cnt << " = " << x << std::endl;
         cnt++;
     }
+    std::cout << "\n";
 }
 
 int32_t main()
 {
-    gauss mamama(3, 4);
+    int32_t num_of_variable = 5;
+    gauss mamama(num_of_variable, num_of_variable + 1);
     mamama.see_elements();
     std::cout << "\n";
     mamama.solve();
