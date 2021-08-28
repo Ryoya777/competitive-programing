@@ -248,7 +248,7 @@ signed main()
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     //cout << fixed << setprecision(20);
-    ll n, k, m, l;
+    ll n = 0, k = 0, m = 0, l = 0;
     ll ans = 0;
     ll sum = 0;
     string s;
