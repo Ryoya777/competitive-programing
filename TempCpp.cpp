@@ -248,12 +248,10 @@ signed main()
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     //cout << fixed << setprecision(20);
-    ll n = 0, k = 0, m = 0, l = 0;
-    ll ans = 0;
-    ll sum = 0;
+    ll n = 0,ans = 0,sum = 0;
     string s;
     vector<ll> v;
-    cin >> n >> k >> m;
+    cin >> n;
 
     cout << ans << "\n";
     return 0;
