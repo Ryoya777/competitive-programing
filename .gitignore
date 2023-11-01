@@ -1,0 +1,21 @@
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Compiled source files
+*.class
+*.pyc
+*.o
+
+# IDE/Editor folders
+.idea/
+.vscode/
+*.iml
+
+# Package directories
+node_modules/
+vendor/
+
+# ignore files
+*.png
+*.json
