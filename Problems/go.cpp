@@ -58,35 +58,44 @@ template <class T> void chmax(T& a, T b){if(a < b) a = b;}
 // if(ok) cout << "Yes" << endl;
 // else cout << "No" << endl;
 
-int main(){
+int main() {
     ll N, A, B; cin >> N >> A >> B;
-    string S; cin >> S;
-    string T = S + S;
-    ll p = 0;  // どこから数えるか。Aするたびに１増える (0<=p<=N-1)
-    ll ans = INF;
-    for(int pi=0; pi<=N-1; pi++){
-        ll ans2 = A * pi;
-        int i = pi;
-        int j = i + (N-1);
-        if(N%2==0){
-            while(i<((N/2)+pi)){
-                if(T[i]!=T[j]){
-                    ans2 += B;
+    ll ans = 0;
+
+    string s; cin >> s;
+    s = s + s;  // 2回繰り返す
+
+
+    for(ll sid=0; sid<N; sid++){
+        string t = s.substr(sid, N+sid);
+        ll ans_tmp = 0;
+        if(N % 2 == 1){
+            ll centid = (N+1) / 2;
+            rep(i, centid){
+                if(t[i] != t[N-i-1]){
+                    ans_tmp += B;
                 }
-                i++;
-                j--;
             }
+            ans_tmp += A * sid;
+            chmax(ans, ans_tmp);
         }
         else{
-            while(i<((N/2)+pi)){
-                if(T[i]!=T[j]){
-                    ans2 += B;
+            ll centid = N / 2;
+            rep(i, centid){
+                if(t[i] != t[N-i-1]){
+                    ans_tmp += B;
                 }
-                i++;
-                j--;
             }
+            ans_tmp += A * sid;
+            chmax(ans, ans_tmp);
         }
-        chmin(ans, ans2);
     }
     cout << ans << endl;
+
+
 }
+
+/*
+まず，Sの文字数をカウントして，どれか1文字以外は偶数個ある必要がある．(奇数個ある文字を，交換により偶数個にする)
+文字を左端に移動する関連なので，sを2回繰り返すと楽．
+*/
